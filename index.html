@@ -23,12 +23,33 @@
             width: 200px;
             margin-top: 1em;
         }
+
+        .controls {
+            margin: auto;
+            width: 300px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .controls button {
+            box-sizing: content-box;
+            width: 80px;
+            height: 80px;
+        }
     </style>
 </head>
 
 <body>
     <canvas id="gameCanvas" width="200" height="400"></canvas>
     <p>controls: arrows left/right</p>
+    <div class="controls">
+        <button onclick="moveToLeft()">
+            &lt;
+        </button>
+        <button class="rightButton" onclick="moveToRight()">
+            &gt;
+        </button>
+    </div>
     <script>
         const gameObjectSize = 50;
         const xPositions = [0, 50, 100, 150];
@@ -124,14 +145,25 @@
         document.addEventListener("keydown", keyDownHandler, false);
 
         function keyDownHandler(e) {
-            if ((e.key == "Right" || e.key == "ArrowRight") && player.x + gameObjectSize < canvas.width) {
-                player.x += gameObjectSize;
+            if (e.key == "Right" || e.key == "ArrowRight") {
+                moveToRight();
             }
-            else if ((e.key == "Left" || e.key == "ArrowLeft") && player.x > 0) {
-                player.x -= gameObjectSize;
+            else if (e.key == "Left" || e.key == "ArrowLeft") {
+                moveToLeft();
             }
         }
 
+        function moveToRight() {
+            if (player.x + gameObjectSize < canvas.width) {
+                player.x += gameObjectSize;
+            }
+        }
+
+        function moveToLeft() {
+            if (player.x > 0) {
+                player.x -= gameObjectSize;
+            }
+        }
         const interval = setInterval(gameLoop, 10);
     </script>
 </body>
