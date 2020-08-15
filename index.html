@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car block game</title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        canvas {
+            display: block;
+            margin: auto;
+            border: 1px solid #FFF;
+        }
+
+        p {
+            color: #FFF;
+            margin: auto;
+            display: block;
+            width: 200px;
+            margin-top: 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="gameCanvas" width="200" height="400"></canvas>
+    <p>controls: arrows left/right</p>
+    <script>
+        const gameObjectSize = 50;
+        const xPositions = [0, 50, 100, 150];
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        let score = 0;
+
+        function drawScore(ctx) {
+            ctx.fillStyle = 'white';
+            ctx.font = "12px Arial";
+            ctx.fillText(`Score: ${score}`, 75, 200);
+        }
+
+        function drawRect(x, y, color) {
+            ctx.beginPath();
+            ctx.rect(x, y, gameObjectSize, gameObjectSize);
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        class Enemy {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.speed = 1;
+            }
+
+            update(canvas) {
+                if (this.y + this.speed > canvas.height) {
+                    const xPositionIndex = Math.floor((Math.random() * 4) + 1) - 1;
+                    this.x = xPositions[xPositionIndex];
+                    this.y = -gameObjectSize;
+                    this.speed += 0.5;
+                    score += 0.5;
+                }
+                else {
+                    this.y += this.speed;
+                }
+            }
+
+            render(ctx) {
+                drawRect(this.x, this.y, this.color);
+                ctx.fillStyle = 'white';
+                ctx.font = "40px Arial";
+                ctx.fillText('4', this.x + 10, this.y + 40);
+            }
+        }
+
+        class Player {
+            constructor(canvas) {
+                this.x = 50;
+                this.y = canvas.height - gameObjectSize;
+                this.color = '#FFF';
+            }
+            update(canvas) {
+            }
+            render() {
+                drawRect(this.x, this.y, this.color);
+                ctx.fillStyle = 'black';
+                ctx.font = "40px Arial";
+                ctx.fillText('0', this.x + 10, this.y + 40);
+            }
+        }
+
+        const player = new Player(canvas);
+        const enemy1 = new Enemy(0, 0, 'red');
+        const enemy2 = new Enemy(150, 0, 'blue');
+        const sprites = [
+            enemy1,
+            enemy2,
+            player,
+        ];
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            sprites.forEach(sprite => {
+                sprite.update(canvas);
+                sprite.render(ctx);
+            });
+
+            if (enemy1.y + gameObjectSize > canvas.height - gameObjectSize &&
+                (enemy1.x == player.x || enemy2.x == player.x)
+            ) {
+                alert('GAME OVER');
+                document.location.reload();
+                clearInterval(interval);
+            }
+            drawScore(ctx);
+        }
+
+        document.addEventListener("keydown", keyDownHandler, false);
+
+        function keyDownHandler(e) {
+            if ((e.key == "Right" || e.key == "ArrowRight") && player.x + gameObjectSize < canvas.width) {
+                player.x += gameObjectSize;
+            }
+            else if ((e.key == "Left" || e.key == "ArrowLeft") && player.x > 0) {
+                player.x -= gameObjectSize;
+            }
+        }
+
+        const interval = setInterval(gameLoop, 10);
+    </script>
+</body>
+
+</html>
