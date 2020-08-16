@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car block game</title>
-    
     <style>
         body {
             background-color: #000;
@@ -103,42 +102,42 @@
                 let x = this.x;
                 let y = this.y;
 
-                this.drawEnemyPart(x, y);
+                drawGameObjectPart(x, y);
 
-                for(let i = 0; i < 2; i++) {
+                for (let i = 0; i < 2; i++) {
                     y += gs - 2 + 3;
-                    this.drawEnemyPart(x, y);
+                    drawGameObjectPart(x, y);
                 }
 
-                for(let i = 0; i < 2; i++) {
+                for (let i = 0; i < 2; i++) {
                     x += gs - 2 + 3;
-                    this.drawEnemyPart(x, y);
+                    drawGameObjectPart(x, y);
                 }
 
-                for(let i = 0; i < 2; i++) {
+                for (let i = 0; i < 2; i++) {
                     y += gs - 2 + 3;
-                    this.drawEnemyPart(x, y);
+                    drawGameObjectPart(x, y);
                 }
 
-                for(let i = 0; i < 3; i++) {
+                for (let i = 0; i < 3; i++) {
                     y += -gs + 2 - 3;
                 }
-                this.drawEnemyPart(x, y);
+                drawGameObjectPart(x, y);
 
                 y += -gs + 2 - 3;
-                this.drawEnemyPart(x, y);
+                drawGameObjectPart(x, y);
             }
+        }
 
-            drawEnemyPart(x, y) {
-                ctx.fillStyle = '#000';
-                const rect = new Path2D();
-                rect.rect(x, y, gs - 2, gs - 2);
-                ctx.stroke(rect);
+        function drawGameObjectPart(x, y) {
+            ctx.fillStyle = '#000';
+            const rectOut = new Path2D();
+            rectOut.rect(x, y, gs - 2, gs - 2);
+            ctx.stroke(rectOut);
 
-                const rectangle3 = new Path2D();
-                rectangle3.rect(x + 3, y + 3, 12, 12);
-                ctx.fill(rectangle3);
-            }
+            const rectIn = new Path2D();
+            rectIn.rect(x + 3, y + 3, 12, 12);
+            ctx.fill(rectIn);
         }
 
         class Player {
@@ -150,117 +149,30 @@
             update(canvas) {
             }
             render() {
-                //drawRect(this.x, this.y, this.color);
                 let x = this.x;
                 let y = this.y;
 
-                ctx.fillStyle = '#000';
-                var rectangle2 = new Path2D();
-                rectangle2.rect(x, y, gs - 2, gs - 2);
-                ctx.stroke(rectangle2);
+                drawGameObjectPart(x, y);
 
-                var rectangle3 = new Path2D();
-                rectangle3.rect(x + 3, y + 3, 12, 12);
-                ctx.fill(rectangle3);
+                for (let i = 0; i < 2; i++) {
+                    x += 3 + gs - 2;
+                    drawGameObjectPart(x, y);
+                }
 
-                x += 3 + gs -2;
-                var rectangle2 = new Path2D();
-                rectangle2.rect(x, y, gs - 2, gs - 2);
-                ctx.stroke(rectangle2);
+                for (let i = 0; i < 4; i++) {
+                    y += 3 + gs - 2;
+                    drawGameObjectPart(x, y);
+                }
 
-                var rectangle3 = new Path2D();
-                rectangle3.rect(x + 3, y + 3, 12, 12);
-                ctx.fill(rectangle3);
+                for (let i = 0; i < 2; i++) {
+                    x -= 3 + gs - 2;
+                    drawGameObjectPart(x, y);
+                }
 
-                x += 3 + gs -2;
-                var rectangle2 = new Path2D();
-                rectangle2.rect(x, y, gs - 2, gs - 2);
-                ctx.stroke(rectangle2);
-
-                var rectangle3 = new Path2D();
-                rectangle3.rect(x + 3, y + 3, 12, 12);
-                ctx.fill(rectangle3);
-
-                y += 3 + gs -2;
-                var rectangle2 = new Path2D();
-                rectangle2.rect(x, y, gs - 2, gs - 2);
-                ctx.stroke(rectangle2);
-
-                var rectangle3 = new Path2D();
-                rectangle3.rect(x + 3, y + 3, 12, 12);
-                ctx.fill(rectangle3);
-
-                y += 3 + gs -2;
-                var rectangle2 = new Path2D();
-                rectangle2.rect(x, y, gs - 2, gs - 2);
-                ctx.stroke(rectangle2);
-
-                var rectangle3 = new Path2D();
-                rectangle3.rect(x + 3, y + 3, 12, 12);
-                ctx.fill(rectangle3);
-
-                y += 3 + gs -2;
-                var rectangle2 = new Path2D();
-                rectangle2.rect(x, y, gs - 2, gs - 2);
-                ctx.stroke(rectangle2);
-
-                var rectangle3 = new Path2D();
-                rectangle3.rect(x + 3, y + 3, 12, 12);
-                ctx.fill(rectangle3);
-
-                y += 3 + gs -2;
-                var rectangle2 = new Path2D();
-                rectangle2.rect(x, y, gs - 2, gs - 2);
-                ctx.stroke(rectangle2);
-
-                var rectangle3 = new Path2D();
-                rectangle3.rect(x + 3, y + 3, 12, 12);
-                ctx.fill(rectangle3);
-
-                x -= 3 + gs -2;
-                var rectangle2 = new Path2D();
-                rectangle2.rect(x, y, gs - 2, gs - 2);
-                ctx.stroke(rectangle2);
-
-                var rectangle3 = new Path2D();
-                rectangle3.rect(x + 3, y + 3, 12, 12);
-                ctx.fill(rectangle3);
-
-                x -= 3 + gs -2;
-                var rectangle2 = new Path2D();
-                rectangle2.rect(x, y, gs - 2, gs - 2);
-                ctx.stroke(rectangle2);
-
-                var rectangle3 = new Path2D();
-                rectangle3.rect(x + 3, y + 3, 12, 12);
-                ctx.fill(rectangle3);
-
-                y -= 3 + gs -2;
-                var rectangle2 = new Path2D();
-                rectangle2.rect(x, y, gs - 2, gs - 2);
-                ctx.stroke(rectangle2);
-
-                var rectangle3 = new Path2D();
-                rectangle3.rect(x + 3, y + 3, 12, 12);
-                ctx.fill(rectangle3);
-
-                y -= 3 + gs -2;
-                var rectangle2 = new Path2D();
-                rectangle2.rect(x, y, gs - 2, gs - 2);
-                ctx.stroke(rectangle2);
-
-                var rectangle3 = new Path2D();
-                rectangle3.rect(x + 3, y + 3, 12, 12);
-                ctx.fill(rectangle3);
-
-                y -= 3 + gs -2;
-                var rectangle2 = new Path2D();
-                rectangle2.rect(x, y, gs - 2, gs - 2);
-                ctx.stroke(rectangle2);
-
-                var rectangle3 = new Path2D();
-                rectangle3.rect(x + 3, y + 3, 12, 12);
-                ctx.fill(rectangle3);
+                for (let i = 0; i < 3; i++) {
+                    y -= 3 + gs - 2;
+                    drawGameObjectPart(x, y);
+                }
             }
         }
 
@@ -285,8 +197,8 @@
 
         let isRunning = true;
         const w = Math.floor(window.innerWidth / 20),
-             h = Math.floor(window.innerHeight / 20),
-             gs = 20;
+            h = Math.floor(window.innerHeight / 20),
+            gs = 20;
 
 
         function gameLoop() {
@@ -296,7 +208,7 @@
             ctx.fillStyle = "#a4b6ad";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            for (x = 0; x < w; x++){
+            for (x = 0; x < w; x++) {
                 for (y = 0; y < h; y++) {
                     ctx.fillStyle = "#9ca9a3";
                     ctx.fillRect(x * gs, y * gs, gs - 2, gs - 2);
