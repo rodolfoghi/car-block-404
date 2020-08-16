@@ -36,6 +36,16 @@
             width: 80px;
             height: 80px;
         }
+
+        #restartButton {
+            font-size: 30px;
+            position: absolute;
+            top: 100px;
+            left: 47%;
+            display: none;
+            height: 90px;
+            border-radius: 5%;
+        }
     </style>
 </head>
 
@@ -50,9 +60,13 @@
             &gt;
         </button>
     </div>
+
+    <button id="restartButton" onclick="restart()">Restart</button>
+
     <script>
         const gameObjectSize = 50;
         const xPositions = [0, 50, 100, 150];
+        const restartButton = document.getElementById('restartButton');
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
         let score = 0;
@@ -84,7 +98,7 @@
                     const xPositionIndex = Math.floor((Math.random() * 4) + 1) - 1;
                     this.x = xPositions[xPositionIndex];
                     this.y = -gameObjectSize;
-                    this.speed += 0.5;
+                    this.speed += 0.15;
                     score += 0.5;
                 }
                 else {
@@ -125,7 +139,21 @@
             player,
         ];
 
+        function gameOver() {
+            isRunning = false;
+            restartButton.style.display = 'block';
+            clearInterval(interval);
+        }
+
+        function restart() {
+            document.location.reload();
+        }
+
+        let isRunning = true;
         function gameLoop() {
+            if (!isRunning) {
+                return;
+            }
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             sprites.forEach(sprite => {
                 sprite.update(canvas);
@@ -135,9 +163,7 @@
             if (enemy1.y + gameObjectSize > canvas.height - gameObjectSize &&
                 (enemy1.x == player.x || enemy2.x == player.x)
             ) {
-                alert('GAME OVER');
-                document.location.reload();
-                clearInterval(interval);
+                gameOver();
             }
             drawScore(ctx);
         }
