@@ -1,5 +1,27 @@
 body {
-    background-color: #000;
+    margin: 0;
+    padding: 0;
+    /* background-color: #000; */
+    /* background-image: url(favicon.png); */
+}
+
+body::after {
+    content: "";
+    background-image: url(favicon.png);
+    opacity: 0.3;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.container {
+    margin: auto;
+    max-width: 360px;
+    max-height: 575px;
+    position: relative;
 }
 
 canvas {
@@ -8,7 +30,6 @@ canvas {
 }
 
 p {
-    color: #f9d93d;
     text-align: center;
     margin-top: 1em;
 }
@@ -26,21 +47,29 @@ p {
 }
 
 .controls {
+    position: absolute;
+    bottom: 0px;
     margin: auto;
-    width: 300px;
+    width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .controls button {
     box-sizing: content-box;
     width: 80px;
     height: 80px;
+    background-color: #f9d93d;
+    opacity: 0.8;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
 }
 
 .button {
     border-radius: 100%;
-    background-color: #f9d93d;
     border: none;
     box-shadow: 0px 0px 8px black;
     cursor: pointer;

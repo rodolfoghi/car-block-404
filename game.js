@@ -1,15 +1,35 @@
 window.onload = () => {
-    const gameObjectHeight = 102;
-    const xPositions = [0, 60, 120, 180];
-    const restartButton = document.getElementById('restartButton');
-    const canvas = document.getElementById("gameCanvas");
-    const ctx = canvas.getContext("2d");
-    let score = 0;
+    let score = 0,
+        isRunning = true,
+        w, h;
+
+    const gameObjectHeight = 102,
+        xPositions = [0, 60, 120, 180],
+        restartButton = document.getElementById('restartButton'),
+        container = document.getElementById('gameContainer'),
+        canvas = document.createElement('canvas'),
+        ctx = canvas.getContext("2d"),
+        maxCanvasWidth = 240,
+        maxCanvasHeight = 575,
+        gs = 20,
+        resizeCanvas = () => {
+            canvas.width = Math.min(window.innerWidth, maxCanvasWidth);
+            canvas.height = Math.min(window.innerHeight, maxCanvasHeight);
+            w = Math.floor(window.innerWidth / 20);
+            h = Math.floor(window.innerHeight / 20);
+        };
+
+    resizeCanvas();
+    container.insertBefore(canvas, container.childNodes[0]);
+
+    window.onresize = () => {
+        resizeCanvas();
+    }
 
     function drawScore(ctx) {
         ctx.fillStyle = '#000';
         ctx.font = "16px Arial";
-        ctx.fillText(`Score: ${score}`, 75, 200);
+        ctx.fillText(`Score: ${score}`, 15, 15);
     }
 
     class Enemy {
@@ -75,12 +95,13 @@ window.onload = () => {
     }
 
     class Player {
-        constructor(canvas) {
+        constructor() {
             this.x = xPositions[1];
-            this.y = canvas.height - gameObjectHeight;
             this.color = '#FFF';
         }
+
         update(canvas) {
+            this.y = canvas.height - gameObjectHeight;
         }
         render() {
             let x = this.x;
@@ -110,7 +131,7 @@ window.onload = () => {
         }
     }
 
-    const player = new Player(canvas);
+    const player = new Player();
     const enemy1 = new Enemy(xPositions[0], 0);
     const enemy2 = new Enemy(xPositions[3], 0);
     const sprites = [
@@ -126,12 +147,6 @@ window.onload = () => {
     }
 
     restartButton.addEventListener('click', () => document.location.reload());
-
-    let isRunning = true;
-    const w = Math.floor(window.innerWidth / 20),
-        h = Math.floor(window.innerHeight / 20),
-        gs = 20;
-
 
     function gameLoop() {
         if (!isRunning) {
@@ -150,7 +165,6 @@ window.onload = () => {
                 ctx.fillRect(x * gs + 4, y * gs + 4, gs - 10, gs - 10);
             }
         }
-
 
         sprites.forEach(sprite => {
             sprite.update(canvas);
@@ -176,7 +190,6 @@ window.onload = () => {
         }
     }
 
-
     function moveToRight() {
         const currentIndex = xPositions.indexOf(player.x);
         if (currentIndex < 3) {
@@ -184,7 +197,6 @@ window.onload = () => {
         }
     }
     document.getElementById('moveRight').addEventListener('click', moveToRight);
-
 
     function moveToLeft() {
         const currentIndex = xPositions.indexOf(player.x);
