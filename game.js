@@ -1,12 +1,13 @@
-window.onload = () => {
+function startGame() {
     let score = 0,
         isRunning = true,
         w, h;
 
-    const gameObjectHeight = 102,
+    const startButton = document.getElementById('startButton'),
+        gameObjectHeight = 102,
         xPositions = [0, 60, 120, 180],
-        restartButton = document.getElementById('restartButton'),
         container = document.getElementById('gameContainer'),
+        CANVAS_ID = "gameCanvas",
         canvas = document.createElement('canvas'),
         ctx = canvas.getContext("2d"),
         maxCanvasWidth = 240,
@@ -19,8 +20,16 @@ window.onload = () => {
             h = Math.floor(window.innerHeight / 20);
         };
 
+    if (container.childNodes[0].id == CANVAS_ID) {
+        container.removeChild(container.childNodes[0]);
+    }
+
+    // hide the startButton
+    startButton.style.display = 'none';
     resizeCanvas();
+    canvas.id = CANVAS_ID;
     container.insertBefore(canvas, container.childNodes[0]);
+    document.querySelector('.controls').style.display = 'flex';
 
     window.onresize = () => {
         resizeCanvas();
@@ -142,11 +151,10 @@ window.onload = () => {
 
     function gameOver() {
         isRunning = false;
-        restartButton.style.display = 'block';
+        startButton.style.display = 'block';
+        document.querySelector('.controls').style.display = 'none';
         clearInterval(interval);
     }
-
-    restartButton.addEventListener('click', () => document.location.reload());
 
     function gameLoop() {
         if (!isRunning) {
@@ -206,6 +214,9 @@ window.onload = () => {
     }
 
     document.getElementById('moveLeft').addEventListener('click', moveToLeft);
-
     const interval = setInterval(gameLoop, 10);
+}
+
+window.onload = () => {
+    document.getElementById('startButton').addEventListener('click', startGame);
 };
