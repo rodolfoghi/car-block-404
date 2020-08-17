@@ -151,6 +151,7 @@ function startGame() {
 
     function gameOver() {
         isRunning = false;
+        startButton.textContent = "Play again!";
         startButton.style.display = 'block';
         document.querySelector('.controls').style.display = 'none';
         clearInterval(interval);

@@ -1,8 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    /* background-color: #000; */
-    /* background-image: url(favicon.png); */
+    background-color: #000;
 }
 
 body::after {
@@ -27,6 +26,8 @@ body::after {
 canvas {
     display: block;
     margin: auto;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,1);
+    border: 1px groove;
 }
 
 #startButton {
