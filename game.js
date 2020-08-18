@@ -3,7 +3,8 @@ function startGame() {
         isRunning = true,
         w, h;
 
-    const startButton = document.getElementById('startButton'),
+    const APP_NAME = 'carBlockGameJs13k',
+        startButton = document.getElementById('startButton'),
         gameObjectHeight = 102,
         xPositions = [0, 60, 120, 180],
         container = document.getElementById('gameContainer'),
@@ -30,6 +31,7 @@ function startGame() {
     canvas.id = CANVAS_ID;
     container.insertBefore(canvas, container.childNodes[0]);
     document.querySelector('.controls').style.display = 'flex';
+    let highScore = getHighScore();
 
     window.onresize = () => {
         resizeCanvas();
@@ -38,7 +40,7 @@ function startGame() {
     function drawScore(ctx) {
         ctx.fillStyle = '#000';
         ctx.font = "16px Arial";
-        ctx.fillText(`Score: ${score}`, 15, 15);
+        ctx.fillText(`Score: ${score}   High score: ${highScore}`, 15, 15);
     }
 
     class Enemy {
@@ -154,6 +156,13 @@ function startGame() {
         startButton.textContent = "Play again!";
         startButton.style.display = 'block';
         document.querySelector('.controls').style.display = 'none';
+
+
+        if (score > highScore) {
+            highScore = score;
+            saveHighScore(score);
+        }
+
         clearInterval(interval);
     }
 
@@ -216,6 +225,15 @@ function startGame() {
 
     document.getElementById('moveLeft').addEventListener('click', moveToLeft);
     const interval = setInterval(gameLoop, 10);
+
+    function getHighScore() {
+        const highScore = localStorage.getItem(`${APP_NAME}.highScore`) || "0";
+        return parseInt(highScore, 10);
+    }
+
+    function saveHighScore(score) {
+        localStorage.setItem(`${APP_NAME}.highScore`, score);
+    }
 }
 
 window.onload = () => {
